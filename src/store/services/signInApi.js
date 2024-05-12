@@ -7,11 +7,7 @@ export const preferencesApi = apiSlice.injectEndpoints({
         url: '/login',
         method: 'POST',
         body: data,
-        // transformResponse: response => response.json(),
       }),
-      onQueryStarted: (arg, {dispatch, queryFulfilled}) => {
-        console.log('query started', arg);
-      },
     }),
   }),
   overrideExisting: false,

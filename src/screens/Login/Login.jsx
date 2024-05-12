@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {Button, Input} from '../../components';
 import {useSignInMutation} from '../../store/services/signInApi';
 import {useDispatch, useSelector} from 'react-redux';
-import {setToken} from '../../store/slices/authSlice';
+import {setAuth} from '../../store/slices/authSlice';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
@@ -11,9 +11,9 @@ const Login = ({navigation}) => {
   const [password, onChangePassword] = useState('');
 
   const [signIn, {data, isLoading, isSuccess}] = useSignInMutation();
-  const {token} = useSelector(state => state.auth);
+  const {token, auth} = useSelector(state => state.auth);
 
-  console.log('token is', token);
+  // console.log('auth is', auth);
 
   const handleLogin = async () => {
     await signIn({email, password});
@@ -22,10 +22,10 @@ const Login = ({navigation}) => {
   // setToken to redux store
   useEffect(() => {
     if (isSuccess) {
-      console.log('data is b', data?.response?.records?.token);
-      dispatch(setToken(data?.response?.records?.token));
+      dispatch(setAuth(data?.response?.records));
+      navigation.navigate('Profile');
     }
-  }, [isSuccess, data?.response?.records?.token, dispatch]);
+  }, [isSuccess, data?.response?.records, dispatch, navigation]);
 
   return (
     <View>
@@ -44,7 +44,10 @@ const Login = ({navigation}) => {
       <Button
         onPress={() => navigation.navigate('Register')}
         style={{backgroundColor: 'blue', padding: 10}}>
-        <Text>Register</Text>
+        <Text>
+          {isLoading && <Text>Loading</Text>}
+          {!isLoading && <Text>Register</Text>}
+        </Text>
       </Button>
     </View>
   );

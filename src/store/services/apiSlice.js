@@ -5,9 +5,9 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://demo.artifism.techvill.net/api/V1',
     prepareHeaders: async (headers, {getState}) => {
-      const token = getState()?.auth?.token;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+      const auth = getState().auth;
+      if (auth) {
+        headers.set('Authorization', `Bearer ${auth?.auth?.token}`);
       }
       return headers;
     },
