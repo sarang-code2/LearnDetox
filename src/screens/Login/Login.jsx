@@ -1,28 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {Button, Input} from '../../components';
 import {useSignInMutation} from '../../store/services/signInApi';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAuth} from '../../store/slices/authSlice';
 
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {
     control,
-    formState: {errors},
     handleSubmit,
-  } = useForm();
-
-  const [email, onChangeEmail] = useState('');
-  const [password, onChangePassword] = useState('');
+    formState: {errors},
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const [signIn, {isLoading, isSuccess}] = useSignInMutation();
   const {token, auth} = useSelector(state => state.auth);
 
-  // console.log('auth is', auth);
+  console.log('error is', errors);
 
   const onSubmit = async data => {
     // await signIn({email, password});
@@ -37,34 +39,47 @@ const Login = ({navigation}) => {
   //     navigation.navigate('Profile');
   //   }
   // }, [isSuccess, data?.response?.records, dispatch, navigation]);
-  // }, [isSuccess, data?.response?.records, dispatch, navigation]);
 
   return (
     <View>
-      <Input
-        name="email"
+      <Controller
         control={control}
-        rules={{required: true}}
-        placeholder="e.g, johnson@gmail.com"
+        rules={{
+          required: true,
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            placeholderText="First name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="email"
       />
-      {errors.email?.type === 'required' && <Text>First name is required</Text>}
-      <Text>First name is required</Text>
-      <Input name="password" control={control} placeholder="**********" />
+      {errors.email && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            placeholderText="First name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="password"
+      />
+      {errors.password && <Text>This is required.</Text>}
       <Button
         // onPress={handleLogin}
         onPress={handleSubmit(onSubmit)}
         style={{backgroundColor: 'green', padding: 10}}>
         <Text>Login</Text>
-      </Button>
-
-      <Text>Don't have an account? </Text>
-      <Button
-        onPress={() => navigation.navigate('Register')}
-        style={{backgroundColor: 'blue', padding: 10}}>
-        <Text>
-          {isLoading && <Text>Loading</Text>}
-          {!isLoading && <Text>Register</Text>}
-        </Text>
       </Button>
     </View>
   );
