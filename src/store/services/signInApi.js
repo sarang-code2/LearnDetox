@@ -1,3 +1,4 @@
+import {setAuth} from '../slices/authSlice';
 import {apiSlice} from './apiSlice';
 
 export const preferencesApi = apiSlice.injectEndpoints({
@@ -8,6 +9,12 @@ export const preferencesApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      async onQueryStarted(arg, {dispatch, queryFulfilled}) {
+        try {
+          const {data} = await queryFulfilled;
+          dispatch(setAuth(data?.response?.records));
+        } catch {}
+      },
     }),
   }),
   overrideExisting: false,
