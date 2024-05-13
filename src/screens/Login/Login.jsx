@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text} from 'react-native';
+import {styles} from './LoginStyles';
+import {Controller, useForm} from 'react-hook-form';
 import {Button, Input} from '../../components';
 import {useSignInMutation} from '../../store/services/signInApi';
-import {useDispatch, useSelector} from 'react-redux';
-import {setAuth} from '../../store/slices/authSlice';
-
-import {Controller, useForm} from 'react-hook-form';
 
 const Login = ({navigation}) => {
-  const dispatch = useDispatch();
-
+  // form control
   const {
     control,
     handleSubmit,
@@ -21,43 +18,41 @@ const Login = ({navigation}) => {
     },
   });
 
-  const [signIn, {isLoading, isSuccess}] = useSignInMutation();
-  const {token, auth} = useSelector(state => state.auth);
+  // signIn mutation
+  const [signIn, {isLoading, isSuccess, isError, error}] = useSignInMutation();
 
-  console.log('error is', errors);
-
-  const onSubmit = async data => {
-    // await signIn({email, password});
-    console.log('email is', data.email);
-    console.log('password is', data.password);
+  // submit form
+  const onSubmit = async formData => {
+    await signIn({email: formData.email, password: formData.password});
   };
 
-  // setToken to redux store
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     dispatch(setAuth(data?.response?.records));
-  //     navigation.navigate('Profile');
-  //   }
-  // }, [isSuccess, data?.response?.records, dispatch, navigation]);
+  // redirect to profile page after successful login
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate('Profile');
+    }
+  }, [isSuccess, navigation]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={control}
         rules={{
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            placeholderText="First name"
+          <Input
+            label="Email"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
+            placeholder="e.g, johnson@gmail.com"
+            placeholderTextColor={'#C8C8C8'}
           />
         )}
         name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
+      {errors.email && <Text>Email is required.</Text>}
 
       <Controller
         control={control}
@@ -65,22 +60,44 @@ const Login = ({navigation}) => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            placeholderText="First name"
+          <Input
+            label="Password"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
+            placeholder="**************"
+            placeholderTextColor={'#C8C8C8'}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>This is required.</Text>}
-      <Button
-        // onPress={handleLogin}
-        onPress={handleSubmit(onSubmit)}
-        style={{backgroundColor: 'green', padding: 10}}>
-        <Text>Login</Text>
+      {errors.password && <Text>Password is required.</Text>}
+
+      {/* login error */}
+      {isError && (
+        <View style={styles.loginError}>
+          <Text style={styles.forgotPassword}>
+            {error?.error ?? 'An error occurred'}
+          </Text>
+        </View>
+      )}
+
+      <Button style={styles.loginBtn} onPress={handleSubmit(onSubmit)}>
+        <Text style={styles.loginText}>
+          {isLoading ? 'Loading...' : 'Login'}
+        </Text>
       </Button>
+
+      <View style={styles.registerTextWrap}>
+        <Text>
+          Don't have an account?{' '}
+          <Text
+            onPress={() => navigation.navigate('Register')}
+            style={styles.registerText}>
+            Register
+          </Text>
+        </Text>
+      </View>
     </View>
   );
 };

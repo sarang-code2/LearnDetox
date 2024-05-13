@@ -1,22 +1,13 @@
 import React from 'react';
-import {TextInput} from 'react-native';
 import {styles} from './InputStyle';
-import {useController} from 'react-hook-form';
+import {Text, TextInput, View} from 'react-native';
 
-// const Input = ({name, control}) => {
-const Input = (...props) => {
-  // const {field} = useController({
-  //   control,
-  //   defaultValue: '',
-  //   name,
-  // });
+const Input = ({label, ...props}) => {
   return (
-    <TextInput
-      {...props}
-      // value={field.value}
-      // onChangeText={field.onChange}
-      style={styles.input}
-    />
+    <View>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput style={styles.input} {...props} />
+    </View>
   );
 };
 

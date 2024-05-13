@@ -2,7 +2,9 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
+    marginTop: 20,
+    fontSize: 15,
+    fontWeight: '500',
     color: '#2C2C2C',
   },
   input: {
