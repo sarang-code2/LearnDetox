@@ -10,6 +10,7 @@ const Login = ({navigation}) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -29,12 +30,14 @@ const Login = ({navigation}) => {
   // redirect to profile page after successful login
   useEffect(() => {
     if (isSuccess) {
+      reset();
       navigation.navigate('Profile');
     }
-  }, [isSuccess, navigation]);
+  }, [isSuccess, reset, navigation]);
 
   return (
     <View style={styles.container}>
+      {/* email */}
       <Controller
         control={control}
         rules={{
@@ -54,6 +57,7 @@ const Login = ({navigation}) => {
       />
       {errors.email && <Text>Email is required.</Text>}
 
+      {/* password */}
       <Controller
         control={control}
         rules={{

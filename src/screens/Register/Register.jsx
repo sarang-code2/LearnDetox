@@ -10,6 +10,7 @@ const Register = ({navigation}) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -20,7 +21,7 @@ const Register = ({navigation}) => {
     },
   });
 
-  // signIn mutation
+  // signUp mutation
   const [signUp, {isLoading, isSuccess, isError, error}] = useSignUpMutation();
 
   // submit form
@@ -33,14 +34,13 @@ const Register = ({navigation}) => {
     });
   };
 
-  console.log('suignup error is', errors);
-
-  // redirect to profile page after successful login
+  // redirect to login page after successful login
   useEffect(() => {
     if (isSuccess) {
+      reset();
       navigation.navigate('Login');
     }
-  }, [isSuccess, navigation]);
+  }, [isSuccess, reset, navigation]);
 
   return (
     <View style={styles.container}>
@@ -64,6 +64,7 @@ const Register = ({navigation}) => {
       />
       {errors.first_name && <Text>First Name is required.</Text>}
 
+      {/* last name */}
       <Controller
         control={control}
         rules={{
@@ -83,6 +84,7 @@ const Register = ({navigation}) => {
       />
       {errors.last_name && <Text>Last Name is required.</Text>}
 
+      {/* email */}
       <Controller
         control={control}
         rules={{
@@ -102,6 +104,7 @@ const Register = ({navigation}) => {
       />
       {errors.email && <Text>Email is required.</Text>}
 
+      {/* password */}
       <Controller
         control={control}
         rules={{
