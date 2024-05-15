@@ -31,7 +31,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     if (isSuccess) {
       reset();
-      navigation.navigate('Profile');
+      // navigation.navigate('Profile');
     }
   }, [isSuccess, reset, navigation]);
 

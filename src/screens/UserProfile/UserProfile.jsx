@@ -4,20 +4,20 @@ import {View, Text, Image} from 'react-native';
 import {styles} from './UserProfileStyle';
 
 const UserProfile = () => {
-  const {auth} = useSelector(state => state.auth) || {};
+  const {user} = useSelector(state => state.auth) || {};
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Image
           style={styles.userImage}
           source={{
-            uri: auth?.picture || 'https://via.placeholder.com/150',
+            uri: user?.picture || 'https://via.placeholder.com/150',
           }}
         />
         <View>
-          <Text style={styles.name}>ID: {auth?.user_id}</Text>
-          <Text style={styles.name}>{auth?.name}</Text>
-          <Text style={styles.email}>{auth?.email}</Text>
+          <Text style={styles.name}>ID: {user?.user_id}</Text>
+          <Text style={styles.name}>{user?.name}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
         </View>
       </View>
     </View>
