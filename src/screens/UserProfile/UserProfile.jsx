@@ -1,14 +1,20 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, Image} from 'react-native';
 import {styles} from './UserProfileStyle';
 import {Button} from '../../components';
+import {userLoggedOut} from '../../store/slices/authSlice';
 
 const UserProfile = () => {
+  const dispatch = useDispatch();
   const {user} = useSelector(state => state.auth) || {};
   return (
     <View style={styles.container}>
-      <Button style={styles.logoutBtn}>
+      <Button
+        onPress={() => {
+          dispatch(userLoggedOut());
+        }}
+        style={styles.logoutBtn}>
         <Text style={styles.logout}>Logout</Text>
       </Button>
       <View style={styles.card}>
