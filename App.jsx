@@ -5,10 +5,13 @@ import {
 import React, {useCallback, useRef} from 'react';
 import 'react-native-gesture-handler';
 import Auth from './src/navigation/Auth';
+import useAuthCheck from './src/hooks/useAuthCheck';
+import {Text, View} from 'react-native';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
   const routeNameRef = useRef();
+  const authChecked = useAuthCheck();
 
   const handleStateChange = useCallback(async () => {
     const previousRouteName = routeNameRef.current;
@@ -31,7 +34,7 @@ const App = () => {
     routeNameRef.current = navigationRef?.getCurrentRoute()?.name;
   }, [routeNameRef, navigationRef]);
 
-  return (
+  return authChecked ? (
     <NavigationContainer
       ref={navigationRef}
       onReady={handleReady}
@@ -39,6 +42,10 @@ const App = () => {
       {/* App stacks / screens */}
       <Auth />
     </NavigationContainer>
+  ) : (
+    <View>
+      <Text>Loading...</Text>
+    </View>
   );
 };
 
