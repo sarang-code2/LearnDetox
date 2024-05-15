@@ -3,10 +3,10 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import React, {useCallback, useRef} from 'react';
+import {Text, View} from 'react-native';
 import 'react-native-gesture-handler';
 import Auth from './src/navigation/Auth';
 import useAuthCheck from './src/hooks/useAuthCheck';
-import {Text, View} from 'react-native';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();

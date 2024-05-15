@@ -2,11 +2,15 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {View, Text, Image} from 'react-native';
 import {styles} from './UserProfileStyle';
+import {Button} from '../../components';
 
 const UserProfile = () => {
   const {user} = useSelector(state => state.auth) || {};
   return (
     <View style={styles.container}>
+      <Button style={styles.logoutBtn}>
+        <Text style={styles.logout}>Logout</Text>
+      </Button>
       <View style={styles.card}>
         <Image
           style={styles.userImage}

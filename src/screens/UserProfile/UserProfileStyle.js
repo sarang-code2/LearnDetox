@@ -5,6 +5,14 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flex: 1,
   },
+  logoutBtn: {
+    marginRight: 10,
+    alignSelf: 'flex-end',
+  },
+  logout: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   card: {
     backgroundColor: '#F3F3F3',
     borderRadius: 10,
