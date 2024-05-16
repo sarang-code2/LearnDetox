@@ -2,11 +2,12 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {Text, View} from 'react-native';
 import 'react-native-gesture-handler';
 import Auth from './src/navigation/Auth';
 import useAuthCheck from './src/hooks/useAuthCheck';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
@@ -33,6 +34,10 @@ const App = () => {
   const handleReady = useCallback(() => {
     routeNameRef.current = navigationRef?.getCurrentRoute()?.name;
   }, [routeNameRef, navigationRef]);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return authChecked ? (
     <NavigationContainer
