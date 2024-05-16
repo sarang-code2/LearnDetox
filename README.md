@@ -15,7 +15,7 @@ Before you begin, ensure you have met the following requirements:
 Here is an overview of the project structure:
 
 ```plaintext
-react-native-starter-app/
+react-native-starter-app/ ProfileConnect
 ├── android/                # Native Android code
 ├── ios/                    # Native iOS code
 ├── src/                    # Source code for the React Native app
