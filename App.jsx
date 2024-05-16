@@ -7,7 +7,7 @@ import 'react-native-gesture-handler';
 import Auth from './src/navigation/Auth';
 import useAuthCheck from './src/hooks/useAuthCheck';
 import SplashScreen from 'react-native-splash-screen';
-import AuthCheckingUi from './src/components/AuthCheckingUi/AuthCheckingUi';
+import {AuthCheckingUi} from './src/components';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
