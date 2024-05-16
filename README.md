@@ -12,41 +12,30 @@ Before you begin, ensure you have met the following requirements:
 
 ## Project Structure
 
-Here is an overview of the project's structure:
+Here is an overview of the project structure:
 
-ProfileConnect
-├── android
-├── ios
-├── src
-│ ├── assets
-│ ├── components
-│ ├── navigation
-│ ├── store
-│ ├── screens
-│ ├── services
-│ └── utils
-├── App.js
-├── package.json
-├── ......
-└── README.md
-
-## Features
-
-### React Navigation
-
-The project uses React Navigation for routing and navigation.
-
-### Redux Toolkit & RTK Query
-
-State management is handled using Redux Toolkit and RTK Query for data fetching and caching.
-
-### AsyncStorage for Auth Persistence
-
-Authentication state is persisted using AsyncStorage.
-
-### Private and Public Route Handling
-
-Routes are managed to handle both private (authenticated) and public (unauthenticated) access.
+```plaintext
+react-native-starter-app/
+├── android/                # Native Android code
+├── ios/                    # Native iOS code
+├── src/                    # Source code for the React Native app
+│   ├── assets/             # Asset files (images, fonts, etc.)
+│   ├── components/         # Reusable components
+│   ├── navigation/         # Navigation configuration
+│   ├── screens/            # Screen components
+│   ├── store/              # Manage state using Redux Toolkit and API Service using RTK Query
+│   ├── utils/              # Styling files
+│   └── hooks               # Entry point of the application
+├── .gitignore              # Git ignore file
+├── App.js                  # Entry point for the React Native app
+├── app.json                # Configuration file for the app
+├── babel.config.js         # Babel configuration
+├── index.js                # Entry point for the React Native app
+├── metro.config.js         # Metro bundler configuration
+├── package.json            # NPM dependencies and scripts
+├── README.md               # Project documentation
+└── yarn.lock               # Yarn lock file
+```
 
 ## Installation
 
