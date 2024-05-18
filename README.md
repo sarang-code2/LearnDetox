@@ -1,4 +1,4 @@
-# React Native Starter App / ProfileConnect
+# React Native Starter App
 
 Welcome to the React Native Starter App! This project serves as a template for creating new React Native applications using React Native CLI. It includes essential features like React Navigation, Redux Toolkit, RTK Query, AsyncStorage for authentication persistence, and handling private and public routes.
 
@@ -15,7 +15,7 @@ Before you begin, ensure you have met the following requirements:
 Here is an overview of the project structure:
 
 ```plaintext
-react-native-starter-app/ ProfileConnect
+react-native-starter-app
 ├── android/                # Native Android code
 ├── ios/                    # Native iOS code
 ├── src/                    # Source code for the React Native app
@@ -42,13 +42,13 @@ react-native-starter-app/ ProfileConnect
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/apelmahmudDev/ProfileConnect.git
+   git clone https://github.com/apelmahmudDev/react-native-starter
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd ProfileConnect
+   cd react-native-starter
    ```
 
 3. Install the dependencies:
