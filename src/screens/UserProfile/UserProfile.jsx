@@ -1,37 +1,28 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {View, Text, Image} from 'react-native';
-import {styles} from './UserProfileStyle';
-import {Button} from '../../components';
-import {userLoggedOut} from '../../store/slices/authSlice';
+import { View, Text, Image } from 'react-native';
+import { Button } from '../../components';
 
-const UserProfile = () => {
-  const dispatch = useDispatch();
-  const {user} = useSelector(state => state.auth) || {};
+const Profile = ({ navigation, route }) => {
+  const { user } = route.params;
+
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Image
+        style={{ width: 100, height: 100, borderRadius: 50, marginBottom: 20 }}
+        source={{ uri: user.picture }}
+      />
+      <Text style={{ fontSize: 18 }}>{user.name}</Text>
+      <Text style={{ fontSize: 14, color: 'gray', marginBottom: 20 }}>
+        {user.email}
+      </Text>
+
       <Button
-        onPress={() => {
-          dispatch(userLoggedOut());
-        }}
-        style={styles.logoutBtn}>
-        <Text style={styles.logout}>Logout</Text>
+        onPress={() => navigation.replace('Login')}
+        style={{ padding: 10, backgroundColor: 'red' }}>
+        <Text style={{ color: '#fff' }}>Logout</Text>
       </Button>
-      <View style={styles.card}>
-        <Image
-          style={styles.userImage}
-          source={{
-            uri: user?.picture || 'https://via.placeholder.com/150',
-          }}
-        />
-        <View>
-          <Text style={styles.name}>ID: {user?.user_id}</Text>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Text style={styles.email}>{user?.email}</Text>
-        </View>
-      </View>
     </View>
   );
 };
 
-export default UserProfile;
+export default Profile;

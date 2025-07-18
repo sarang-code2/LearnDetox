@@ -1,17 +1,15 @@
-import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
-import {styles} from './LoginStyles';
-import {Controller, useForm} from 'react-hook-form';
-import {Button, Input} from '../../components';
-import {useSignInMutation} from '../../store/services/signInApi';
+import React, { useState } from 'react';
+import { View, Text, Alert } from 'react-native';
+import { styles } from './LoginStyles';
+import { Controller, useForm } from 'react-hook-form';
+import { Button, Input } from '../../components';
 
-const Login = ({navigation}) => {
-  // form control
+const Login = ({ navigation }) => {
   const {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: '',
@@ -19,37 +17,49 @@ const Login = ({navigation}) => {
     },
   });
 
-  // signIn mutation
-  const [signIn, {isLoading, isSuccess, isError, error}] = useSignInMutation();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // submit form
+  // Hardcoded credentials
+  const HARD_CODED_EMAIL = 'test@example.com';
+  const HARD_CODED_PASSWORD = '123456';
+
   const onSubmit = async formData => {
-    await signIn({email: formData.email, password: formData.password});
-  };
+    setIsLoading(true);
 
-  // redirect to profile page after successful login
-  useEffect(() => {
-    if (isSuccess) {
-      reset();
-      // navigation.navigate('Profile');
-    }
-  }, [isSuccess, reset, navigation]);
+    setTimeout(() => {
+      setIsLoading(false);
+
+      if (
+        formData.email === HARD_CODED_EMAIL &&
+        formData.password === HARD_CODED_PASSWORD
+      ) {
+        Alert.alert('Login Successful', 'Welcome back!');
+        reset();
+        navigation.navigate('Home', {
+          user: {
+            name: 'John Doe',
+            email: 'test@example.com',
+            picture: 'https://via.placeholder.com/150',
+          },
+        });
+      } else {
+        Alert.alert('Login Failed', 'Invalid email or password.');
+      }
+    }, 1000);
+  };
 
   return (
     <View style={styles.container}>
-      {/* email */}
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, onBlur, value}}) => (
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <Input
             label="Email"
             value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            placeholder="e.g, johnson@gmail.com"
+            placeholder="e.g, test@example.com"
             placeholderTextColor={'#C8C8C8'}
           />
         )}
@@ -57,19 +67,17 @@ const Login = ({navigation}) => {
       />
       {errors.email && <Text>Email is required.</Text>}
 
-      {/* password */}
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, onBlur, value}}) => (
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <Input
             label="Password"
             value={value}
             onBlur={onBlur}
             onChangeText={onChange}
             placeholder="**************"
+            secureTextEntry
             placeholderTextColor={'#C8C8C8'}
           />
         )}
@@ -77,31 +85,11 @@ const Login = ({navigation}) => {
       />
       {errors.password && <Text>Password is required.</Text>}
 
-      {/* login error */}
-      {isError && (
-        <View style={styles.loginError}>
-          <Text style={styles.forgotPassword}>
-            {error?.error ?? 'An error occurred'}
-          </Text>
-        </View>
-      )}
-
       <Button style={styles.loginBtn} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.loginText}>
           {isLoading ? 'Loading...' : 'Login'}
         </Text>
       </Button>
-
-      <View style={styles.registerTextWrap}>
-        <Text>
-          Don't have an account?{' '}
-          <Text
-            onPress={() => navigation.navigate('Register')}
-            style={styles.registerText}>
-            Register
-          </Text>
-        </Text>
-      </View>
     </View>
   );
 };
