@@ -29,7 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
+    "@babel/runtime": "^7.26.10",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@react-native/babel-preset": "0.74.83",
@@ -51,5 +51,14 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@3.6.4",
+  "overrides": {
+    "@babel/helpers": "7.26.10",
+    "brace-expansion": "2.0.2",
+    "cross-spawn": "7.0.5",
+    "image-size": "1.2.1",
+    "nanoid": "3.3.8",
+    "on-headers": "1.1.0",
+    "compression": "1.7.4"
+  }
 }
